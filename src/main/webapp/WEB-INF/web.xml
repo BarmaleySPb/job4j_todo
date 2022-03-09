@@ -4,4 +4,23 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>AddItem</servlet-name>
+    <servlet-class>todo.servlets.AddTask</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SetDoneStatus</servlet-name>
+    <servlet-class>todo.servlets.SetDoneStatus</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>SetDoneStatus</servlet-name>
+    <url-pattern>/setdonestatus</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddItem</servlet-name>
+    <url-pattern>/add</url-pattern>
+  </servlet-mapping>
+
 </web-app>

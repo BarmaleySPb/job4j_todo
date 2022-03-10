@@ -13,6 +13,6 @@ public class SetDoneStatus extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String readLine = req.getReader().readLine().replaceAll("[^0-9]", "");
         int i = Integer.parseInt(readLine);
-        HbmStore.instOf().setDone(i);
+        HbmStore.instOf().invertDone(i);
     }
 }

@@ -41,13 +41,13 @@ public class HbmStore implements Store {
     }
 
     @Override
-    public boolean setDone(int id) {
+    public boolean invertDone(int id) {
         boolean result;
         try (Session session = sf.openSession()) {
             session.beginTransaction();
             Task taskDb = session.get(Task.class, id);
             if (taskDb != null) {
-                taskDb.setDone();
+                taskDb.setDone(taskDb.invertDone());
             }
             session.getTransaction().commit();
             result = true;
@@ -68,6 +68,11 @@ public class HbmStore implements Store {
             LOG.error("Error finding all tasks", e);
         }
         return tasks;
+    }
+
+    @Override
+    public Task findById(int id) {
+        return findAll().stream().filter(task -> task.getId() == id).findFirst().orElse(null);
     }
 
     @Override

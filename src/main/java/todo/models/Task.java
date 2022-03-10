@@ -52,8 +52,12 @@ public class Task {
         return done;
     }
 
-    public void setDone() {
-        this.done = !this.done;
+    public void setDone(Boolean done) {
+        this.done = done;
+    }
+
+    public boolean invertDone() {
+        return !done;
     }
 
     @Override

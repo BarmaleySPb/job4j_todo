@@ -7,6 +7,7 @@ import java.util.List;
 public interface Store extends AutoCloseable {
 
     Task addTask(Task task);
-    boolean setDone(int id);
+    boolean invertDone(int id);
     List<Task> findAll();
+    Task findById(int id);
 }

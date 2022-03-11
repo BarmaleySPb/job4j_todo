@@ -2,6 +2,7 @@ package todo.store;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -9,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import todo.models.Task;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 
 public class HbmStore implements Store {
@@ -30,49 +31,45 @@ public class HbmStore implements Store {
 
     @Override
     public Task addTask(Task task) {
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            session.save(task);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            LOG.error("Task is not added", e);
-        }
+        this.tx(session -> session.save(task));
         return task;
     }
 
     @Override
-    public boolean invertDone(int id) {
-        boolean result;
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            Task taskDb = session.get(Task.class, id);
-            if (taskDb != null) {
-                taskDb.setDone(taskDb.invertDone());
-            }
-            session.getTransaction().commit();
-            result = true;
-        } catch (Exception e) {
-            result = false;
-        }
-        return result;
+    public void invertDone(int id) {
+        this.tx(session -> {
+            Task task = session.get(Task.class, id);
+            task.setDone(task.invertDone());
+            return null;
+        });
     }
 
     @Override
     public List<Task> findAll() {
-        List tasks = new ArrayList<>();
-        try (Session session = sf.openSession()) {
-            session.beginTransaction();
-            tasks = session.createQuery("from Task").list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            LOG.error("Error finding all tasks", e);
-        }
-        return tasks;
+        return this.tx(
+                session -> session.createQuery("from Task").list()
+        );
     }
 
     @Override
     public Task findById(int id) {
-        return findAll().stream().filter(task -> task.getId() == id).findFirst().orElse(null);
+        return this.tx(session -> session.get(Task.class, id));
+    }
+
+    private <T> T tx(final Function<Session, T> command) {
+        final Session session = sf.openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            T rsl = command.apply(session);
+            tx.commit();
+            return rsl;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            LOG.error("Error: ", e);
+            throw e;
+        } finally {
+            session.close();
+        }
     }
 
     @Override

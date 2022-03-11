@@ -31,9 +31,9 @@ public class HbmStoreTest {
         Store store = new HbmStore();
         Task task = store.addTask(new Task("description"));
         assertFalse(task.isDone());
-        assertTrue(store.invertDone(task.getId()));
+        store.invertDone(task.getId());
         assertTrue(store.findById(task.getId()).isDone());
-        assertTrue(store.invertDone(task.getId()));
+        store.invertDone(task.getId());
         assertFalse(store.findById(task.getId()).isDone());
     }
 }

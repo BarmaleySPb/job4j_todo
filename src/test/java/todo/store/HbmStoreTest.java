@@ -1,7 +1,9 @@
 package todo.store;
 
 import org.junit.Test;
+import todo.models.Role;
 import todo.models.Task;
+import todo.models.User;
 
 import java.util.List;
 
@@ -16,6 +18,18 @@ public class HbmStoreTest {
         List<Task> tasks = store.findAll();
         assertEquals(tasks.size(), 1);
         assertEquals(tasks.get(0).getDescription(), "description");
+    }
+
+    @Test
+    public void whenAddUser() {
+        Store store = new HbmStore();
+        Role role = Role.of("user");
+        store.addRole(role);
+        User user = User.of("Vasya", role);
+        user.setEmail("aaa@aaa.aa");
+        user.setPassword("asd");
+        store.addUser(user);
+        assertEquals(store.findUserByEmail("aaa@aaa.aa"), user);
     }
 
     @Test

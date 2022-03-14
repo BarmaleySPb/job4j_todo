@@ -2,6 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,13 +18,17 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="scripts.js"></script>
     <title>TODO</title>
 </head>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="scripts.js"></script>
+
 <body>
 
 <div class="container">
+
+    <a style="float: right" class="nav-link" href="<%=request.getContextPath()%>/logout.do"> <c:out value="${user.name}"/>  | Log out</a>
+    <a style="float: left" class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> Login</a>
 
     <form>
         <div class="form-group">
@@ -41,6 +46,7 @@
                 <tr>
                     <th scope="col">Description</th>
                     <th scope="col">Created</th>
+                    <th scope="col">Creator</th>
                     <th scope="col">Done</th>
                 </tr>
             </table>

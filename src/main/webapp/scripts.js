@@ -27,7 +27,6 @@ function setDoneStatus(id) {
     location.reload();
 }
 
-
 $(document).ready(function () {
     $.ajax({
         type: 'GET',
@@ -40,6 +39,7 @@ $(document).ready(function () {
                     `<tr>
                         <td>${task.description}</td>
                         <td>${task.created}</td>
+                        <td>${task.user.name}</td>
                         <td><input type="checkbox" onchange="setDoneStatus(${task.id})"></td>                     
                      </tr>`)
             }
@@ -62,6 +62,7 @@ function showAll() {
                         `<tr>
                             <td>${task.description}</td>
                             <td>${task.created}</td>
+                            <td>${task.user.name}</td>
                             <td><input type="checkbox" checked onchange="setDoneStatus(${task.id})"></td>                     
                         </tr>`)
                 }

@@ -5,22 +5,57 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+  <filter>
+    <filter-name>AuthFilter</filter-name>
+    <filter-class>todo.filters.AuthFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>AuthFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+
+
   <servlet>
-    <servlet-name>AddItem</servlet-name>
-    <servlet-class>todo.servlets.AddTask</servlet-class>
+    <servlet-name>AddTaskServlet</servlet-name>
+    <servlet-class>todo.servlets.AddTaskServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>SetDoneStatus</servlet-name>
-    <servlet-class>todo.servlets.SetDoneStatus</servlet-class>
+    <servlet-name>SetDoneStatusServlet</servlet-name>
+    <servlet-class>todo.servlets.SetDoneStatusServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AuthServlet</servlet-name>
+    <servlet-class>todo.servlets.AuthServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>RegServlet</servlet-name>
+    <servlet-class>todo.servlets.RegServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>todo.servlets.LogoutServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>SetDoneStatus</servlet-name>
+    <servlet-name>SetDoneStatusServlet</servlet-name>
     <url-pattern>/setdonestatus</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>AddItem</servlet-name>
+    <servlet-name>AddTaskServlet</servlet-name>
     <url-pattern>/add</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AuthServlet</servlet-name>
+    <url-pattern>/auth.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>RegServlet</servlet-name>
+    <url-pattern>/reg.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout.do</url-pattern>
   </servlet-mapping>
 
 </web-app>

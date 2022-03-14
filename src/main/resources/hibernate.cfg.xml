@@ -17,5 +17,7 @@
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
         <mapping class="todo.models.Task" />
+        <mapping class="todo.models.Role" />
+        <mapping class="todo.models.User" />
     </session-factory>
 </hibernate-configuration>

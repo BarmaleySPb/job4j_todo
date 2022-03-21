@@ -1,6 +1,7 @@
 package todo.store;
 
 import org.junit.Test;
+import todo.models.Category;
 import todo.models.Role;
 import todo.models.Task;
 import todo.models.User;
@@ -49,5 +50,15 @@ public class HbmStoreTest {
         assertTrue(store.findById(task.getId()).isDone());
         store.invertDone(task.getId());
         assertFalse(store.findById(task.getId()).isDone());
+    }
+
+    @Test
+    public void whenAddCategoryAndFindAllCategories() {
+        Store store = HbmStore.instOf();
+        Category firstCategory = Category.of("first category");
+        Category secondCategory = Category.of("second category");
+        store.addCategory(firstCategory);
+        store.addCategory(secondCategory);
+        assertEquals(store.findAllCategories(), List.of(firstCategory, secondCategory));
     }
 }

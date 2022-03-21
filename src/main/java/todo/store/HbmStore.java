@@ -8,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import todo.models.Category;
 import todo.models.Role;
 import todo.models.Task;
 import todo.models.User;
@@ -50,6 +51,12 @@ public class HbmStore implements Store {
     }
 
     @Override
+    public Category addCategory(Category category) {
+        this.tx(session -> session.save(category));
+        return category;
+    }
+
+    @Override
     public void invertDone(int id) {
         this.tx(session -> {
             Task task = session.get(Task.class, id);
@@ -62,6 +69,13 @@ public class HbmStore implements Store {
     public List<Task> findAll() {
         return this.tx(
                 session -> session.createQuery("from Task").list()
+        );
+    }
+
+    @Override
+    public List<Category> findAllCategories() {
+        return this.tx(
+                session -> session.createQuery("from Category ").list()
         );
     }
 

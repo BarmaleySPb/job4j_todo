@@ -3,7 +3,9 @@ package todo.models;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "task")
@@ -11,13 +13,15 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String description;
-    private Timestamp created = Timestamp.from(Instant.now());
-    private boolean done;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Category> categories = new HashSet<>();
+
+    private String description;
+    private Timestamp created = Timestamp.from(Instant.now());
+    private boolean done;
 
     public Task() {
 
@@ -26,6 +30,10 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.done = false;
+    }
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
     }
 
     public int getId() {

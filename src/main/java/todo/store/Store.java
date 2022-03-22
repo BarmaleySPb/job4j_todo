@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface Store extends AutoCloseable {
 
-    Task addTask(Task task);
+    Task addTask(Task task, String[] categories);
     User addUser(User user);
     Role addRole(Role role);
     Category addCategory(Category category);

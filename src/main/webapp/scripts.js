@@ -2,9 +2,10 @@ function addTask() {
     $.ajax({
         type: 'POST',
         url: 'http://localhost:8080/todo/add',
-        data: JSON.stringify({
-            description: $('#description').val()
-        }),
+        data: {
+            description: $('#description').val(),
+            categories: $('#cIds').val()
+        },
         dataType: 'json'
     }).done(location.reload()
     ).fail(function (err) {

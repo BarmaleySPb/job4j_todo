@@ -15,7 +15,8 @@ public class HbmStoreTest {
     @Test
     public void whenAddItem() {
         Store store = new HbmStore();
-        store.addTask(new Task("description"));
+        String[] categories = {"1", "2", "3"};
+        store.addTask(new Task("description"), categories);
         List<Task> tasks = store.findAll();
         assertEquals(tasks.size(), 1);
         assertEquals(tasks.get(0).getDescription(), "description");
@@ -36,15 +37,17 @@ public class HbmStoreTest {
     @Test
     public void whenFindAll() {
         Store store = new HbmStore();
-        Task firstTask = store.addTask(new Task("first item"));
-        Task secondTask = store.addTask(new Task("second item"));
+        String[] categories = {"1", "2"};
+        Task firstTask = store.addTask(new Task("first item"), categories);
+        Task secondTask = store.addTask(new Task("second item"), categories);
         assertEquals(store.findAll(), List.of(firstTask, secondTask));
     }
 
     @Test
     public void whenSetDone() {
         Store store = new HbmStore();
-        Task task = store.addTask(new Task("description"));
+        String[] categories = {"1", "2"};
+        Task task = store.addTask(new Task("description"), categories);
         assertFalse(task.isDone());
         store.invertDone(task.getId());
         assertTrue(store.findById(task.getId()).isDone());

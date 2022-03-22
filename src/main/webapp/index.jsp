@@ -2,7 +2,6 @@
 <%@ page import="todo.store.HbmStore" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%@ taglib prefix="c1" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>

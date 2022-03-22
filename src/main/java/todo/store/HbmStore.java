@@ -33,8 +33,15 @@ public class HbmStore implements Store {
     }
 
     @Override
-    public Task addTask(Task task) {
-        this.tx(session -> session.save(task));
+    public Task addTask(Task task, String[] ids) {
+        this.tx(session -> {
+            for (String id : ids) {
+                Category category = session.find(Category.class, Integer.parseInt(id));
+                task.addCategory(category);
+            }
+            session.save(task);
+            return null;
+        });
         return task;
     }
 

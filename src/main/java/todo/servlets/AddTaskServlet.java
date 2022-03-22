@@ -20,11 +20,13 @@ public class AddTaskServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        Task task = GSON.fromJson(req.getReader(), Task.class);
+        String description = req.getParameter("description");
+        String[] categories = req.getParameterValues("categories[]");
+        Task task = new Task(description);
         HttpSession sc = req.getSession();
         User user = (User) sc.getAttribute("user");
         task.setUser(user);
-        HbmStore.instOf().addTask(task);
+        HbmStore.instOf().addTask(task, categories);
         resp.setContentType("application/json; charset=utf-8");
         OutputStream output = resp.getOutputStream();
         String json = GSON.toJson(task);

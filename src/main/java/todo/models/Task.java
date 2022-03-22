@@ -80,6 +80,10 @@ public class Task {
         this.user = user;
     }
 
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -1,6 +1,5 @@
 package todo.servlets;
 
-import todo.models.Role;
 import todo.models.User;
 import todo.store.HbmStore;
 

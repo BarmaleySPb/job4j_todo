@@ -1,8 +1,7 @@
 package todo.models;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,11 +16,12 @@ public class Task {
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Category> categories = new HashSet<>();
+    private final Set<Category> categories = new HashSet<>();
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created = new Date(System.currentTimeMillis());
 
-    private String description;
-    private Timestamp created = Timestamp.from(Instant.now());
     private boolean done;
+    private String description;
 
     public Task() {
 
@@ -52,11 +52,11 @@ public class Task {
         this.description = description;
     }
 
-    public Timestamp getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 

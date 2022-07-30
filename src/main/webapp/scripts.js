@@ -34,11 +34,20 @@ $(document).ready(function () {
         url: 'http://localhost:8080/todo/add',
         dataType: 'json'
     }).done(function (data) {
-        for (var task of data) {
+        for (const task of data) {
             if (task.done !== true) {
+                let categories = "";
+                for (let i = 0; i < task.categories.length; i++) {
+                    categories += "<li>" + task.categories[i].name + "</li>";
+                }
                 $('#descriptionList table:last').append(
                     `<tr>
-                        <td>${task.description}</td>
+                        <td>${task.description}</td>                                    
+                        <td>
+                            <ul>
+                                ${categories}
+                            </ul>
+                        </td>
                         <td>${task.created}</td>
                         <td>${task.user.name}</td>
                         <td><input type="checkbox" onchange="setDoneStatus(${task.id})"></td>                     
@@ -59,9 +68,18 @@ function showAll() {
         if ($("#check").prop('checked')) {
             for (var task of data) {
                 if (task.done === true) {
+                    let categories = "";
+                    for (let i = 0; i < task.categories.length; i++) {
+                        categories += "<li>" + task.categories[i].name + "</li>";
+                    }
                     $('#descriptionList table:last').append(
                         `<tr>
                             <td>${task.description}</td>
+                            <td>
+                                <ul>
+                                  ${categories}
+                                </ul>
+                           </td>
                             <td>${task.created}</td>
                             <td>${task.user.name}</td>
                             <td><input type="checkbox" checked onchange="setDoneStatus(${task.id})"></td>                     

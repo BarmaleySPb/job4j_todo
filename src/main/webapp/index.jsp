@@ -26,9 +26,11 @@
 <body>
 
 <div class="container">
-
+    <c:if test="${user == null}">
+        <a style="float: left" class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> Login</a>
+    </c:if>
     <a style="float: right" class="nav-link" href="<%=request.getContextPath()%>/logout.do"> <c:out value="${user.name}"/>  | Log out</a>
-    <a style="float: left" class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> Login</a>
+
 
     <form>
         <div class="form-group">
@@ -52,6 +54,7 @@
             <table class="table table-bordered table-hover table-sm">
                 <tr>
                     <th scope="col">Description</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Created</th>
                     <th scope="col">Creator</th>
                     <th scope="col">Done</th>

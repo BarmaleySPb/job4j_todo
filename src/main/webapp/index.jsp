@@ -29,8 +29,9 @@
     <c:if test="${user == null}">
         <a style="float: left" class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> Login</a>
     </c:if>
-    <a style="float: right" class="nav-link" href="<%=request.getContextPath()%>/logout.do"> <c:out value="${user.name}"/>  | Log out</a>
-
+    <c:if test="${user != null}">
+        <a style="float: right" class="nav-link" href="<%=request.getContextPath()%>/logout.do"> <c:out value="${user.name}"/>  | Log out</a>
+    </c:if>
 
     <form>
         <div class="form-group">
